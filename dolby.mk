@@ -118,6 +118,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     DSPVolumeSynchronizer
 
+# DolbyAtmos
+PRODUCT_PACKAGES += \
+    DolbyAtmos
+
 ifeq ($(TARGET_INCLUDES_OEM_App),true)
 # OnePlus DaxUI and daxService
 PRODUCT_PACKAGES += \
