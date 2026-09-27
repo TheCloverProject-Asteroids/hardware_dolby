@@ -62,7 +62,8 @@ PRODUCT_PACKAGES += \
 
 # Overlays    
 PRODUCT_PACKAGES += \
-    DolbyFrameworksResCommon
+    DolbyFrameworksResCommon \
+    DolbyAtmosResCommon
 
 # Dolby Spatial Audio
 PRODUCT_COPY_FILES += \
