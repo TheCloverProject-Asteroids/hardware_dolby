@@ -26,7 +26,6 @@ AUDIO_FEATURE_ENABLED_DS2_DOLBY_DAP := true
 
 # SEPolicy
 BOARD_VENDOR_SEPOLICY_DIRS += $(DOLBY_PATH)/sepolicy/vendor
-BOARD_VENDOR_SEPOLICY_DIRS += $(DOLBY_PATH)/sepolicy/vendor/vision
 
 # HIDL
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += $(DOLBY_PATH)/dolby_framework_matrix.xml
@@ -36,21 +35,10 @@ PRODUCT_PACKAGES += \
     vendor.dolby.media.c2.xml
 
 # Configs
-ifeq ($(TARGET_INCLUDES_DolbyVision),true)
 PRODUCT_COPY_FILES += \
-    $(DOLBY_PATH)/proprietary/vendor/etc/vision/media_codecs_dolby_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_dolby_audio.xml
-else
-
-PRODUCT_COPY_FILES += \
-    $(DOLBY_PATH)/proprietary/vendor/etc/media_codecs_dolby_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_dolby_audio.xml
-endif
-
-PRODUCT_COPY_FILES += \
+    $(DOLBY_PATH)/proprietary/vendor/etc/media_codecs_dolby_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_dolby_audio.xml \
     $(DOLBY_PATH)/proprietary/vendor/etc/dolby/dax-default-spatializer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-default-spatializer.xml \
-    $(DOLBY_PATH)/proprietary/vendor/etc/dolby/dax-default.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-default.xml \
-    $(DOLBY_PATH)/proprietary/vendor/etc/dolby/dax-moto_1.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-moto_1.xml \
-    $(DOLBY_PATH)/proprietary/vendor/etc/dolby/dax-moto_2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-moto_2.xml \
-    $(DOLBY_PATH)/proprietary/vendor/etc/dolby/dax-moto_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-moto_3.xml
+    $(DOLBY_PATH)/proprietary/vendor/etc/dolby/dax-default.xml:$(TARGET_COPY_OUT_VENDOR)/etc/dolby/dax-default.xml
 
 # Dolby VNDK libs
 PRODUCT_PACKAGES += \
@@ -70,18 +58,11 @@ PRODUCT_COPY_FILES += \
     $(DOLBY_PATH)/configs/android.hardware.sensor.dynamic.head_tracker.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.dynamic.head_tracker.xml
 
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
-       ro.audio.headtracking_enabled=true
-
-# Dolby Spatial Audio: optimize spatializer effect
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-       audio.spatializer.effect.util_clamp_min=300
-
-# Dolby Spatial Audio: declare use of spatial audio
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
-       ro.audio.spatializer_enabled=true \
-       ro.audio.spatializer_transaural_enabled_default=false \
-       ro.audio.stereo_spatialization_enabled=true \
-       persist.vendor.audio.spatializer.speaker_enabled=true
+    ro.audio.headtracking_enabled=true \
+    ro.audio.spatializer_enabled=true \
+    ro.audio.spatializer_transaural_enabled_default=false \
+    ro.audio.stereo_spatialization_enabled=true \
+    audio.spatializer.effect.util_clamp_min=300
 
 # Dolby Spatial Audio Proprietary blobs
 PRODUCT_PACKAGES += \
@@ -111,7 +92,8 @@ PRODUCT_VENDOR_PROPERTIES += \
 PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.dolby.dax.version=DAX3_3.7.0.8_r1 \
     vendor.audio.dolby.ds2.hardbypass=false \
-    vendor.audio.dolby.ds2.enabled=false
+    vendor.audio.dolby.ds2.enabled=false \
+    persist.vendor.audio.spatializer.speaker_enabled=true
 
 # Remove Packages for Dolby Support
 PRODUCT_PACKAGES += \
@@ -124,21 +106,6 @@ PRODUCT_PACKAGES += \
 # DolbyAtmos
 PRODUCT_PACKAGES += \
     DolbyAtmos
-
-ifeq ($(TARGET_INCLUDES_OEM_App),true)
-# OnePlus DaxUI and daxService
-PRODUCT_PACKAGES += \
-    daxService \
-    DaxUI
-
-# Dolby UI permissions
-PRODUCT_COPY_FILES += \
-    $(DOLBY_PATH)/proprietary/system_ext/etc/permissions/privapp-com.dolby.daxappui.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-com.dolby.daxappui.xml \
-    $(DOLBY_PATH)/proprietary/system_ext/etc/permissions/privapp-com.dolby.daxservice.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/permissions/privapp-com.dolby.daxservice.xml \
-    $(DOLBY_PATH)/proprietary/system_ext/etc/sysconfig/config-com.dolby.daxappui.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/sysconfig/config-com.dolby.daxappui.xml \
-    $(DOLBY_PATH)/proprietary/system_ext/etc/sysconfig/config-com.dolby.daxservice.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/sysconfig/config-com.dolby.daxservice.xml \
-    $(DOLBY_PATH)/proprietary/system_ext/etc/sysconfig/hiddenapi-com.dolby.daxservice.xml:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/sysconfig/hiddenapi-com.dolby.daxservice.xml
-endif
 
 # Dolby Proprietary blobs
 PRODUCT_COPY_FILES += \
@@ -170,39 +137,3 @@ PRODUCT_PACKAGES += \
     libstagefright_foundation-atmos \
     libdlbvol \
     vendor.dolby.hardware.dms@2.0-atmos.so
-
-ifeq ($(TARGET_INCLUDES_DolbyVision),true)
-# Dolby vision Proprietary blobs
-PRODUCT_COPY_FILES += \
-    $(DOLBY_PATH)/proprietary/vendor/etc/dolby_vision.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/dolby_vision.cfg \
-    $(DOLBY_PATH)/proprietary/vendor/etc/init/vendor.dolbyvision.media.c2@1.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.dolbyvision.media.c2@1.0-service.rc
-
-PRODUCT_PACKAGES += \
-    c2.dolby.avc.dec \
-    c2.dolby.avc.sec.dec \
-    c2.dolby.client \
-    c2.dolby.egl \
-    c2.dolby.hevc.dec \
-    c2.dolby.hevc.enc \
-    c2.dolby.hevc.sec.dec \
-    c2.dolby.store \
-    libdolbyottcameracontrol \
-    libdolbyvision \
-    dolbycodec2
-
-PRODUCT_PACKAGES += \
-    libstagefright_foundation-swiitchoff
-
-PRODUCT_COPY_FILES += \
-    $(DOLBY_PATH)/proprietary/vendor/etc/init/vendor.dolby.media.dvs-service-vision.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.dolby.media.dvs-service-vision.rc
-
-PRODUCT_PACKAGES += \
-    vendor.dolby.dvs@1.0 \
-    vendor.dolby.media.dvs-service.xml \
-    dvs-hal-service
-
-# Shim
-PRODUCT_PACKAGES += \
-    libcodec2_hidl_shim.vendor
-endif
-
