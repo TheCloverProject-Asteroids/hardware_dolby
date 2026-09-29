@@ -1,7 +1,8 @@
 service vendor-dolby-media-c2-hal-1-0 /vendor/bin/hw/vendor.dolby.media.c2@1.0-service
     class hal
     user mediacodec
-    group camera mediadrm drmrpc
+    group camera mediadrm drmrpc system
+    capabilities SYS_NICE
     ioprio rt 4
-    writepid /dev/cpuset/foreground/tasks
+    task_profiles ProcessCapacityHigh HighPerformance
 
