@@ -27,7 +27,6 @@
         <activity
             android:name=".DolbyActivity"
             android:label="@string/dolby_title"
-            android:icon="@drawable/ic_dolby"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -44,9 +43,6 @@
             <meta-data
                 android:name="com.android.settings.group_key"
                 android:value="audio_category" />
-            <meta-data
-                android:name="com.android.settings.icon"
-                android:resource="@drawable/ic_dolby" />
             <meta-data
                 android:name="com.android.settings.order"
                 android:value="-108" />
