@@ -26,12 +26,13 @@ android_app {
         "org.lineageos.settings.resources",
     ],
 
-    required: ["preinstalled-packages-platform-dolby.xml"],
+    required: ["preinstalled-packages-platform-dolby-asteroids.xml"],
 }
 
 prebuilt_etc {
-    name: "preinstalled-packages-platform-dolby.xml",
+    name: "preinstalled-packages-platform-dolby-asteroids.xml",
     src: "preinstalled-packages-platform-dolby.xml",
+    filename: "preinstalled-packages-platform-dolby.xml",
     sub_dir: "sysconfig",
     system_ext_specific: true,
 }
