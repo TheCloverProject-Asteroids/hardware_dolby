@@ -100,7 +100,7 @@ PRODUCT_PACKAGES += \
 
 # DolbyAtmos
 PRODUCT_PACKAGES += \
-    DolbyAtmos
+    DolbyAtmos-Asteroids
 
 # Dolby Proprietary blobs
 PRODUCT_COPY_FILES += \
